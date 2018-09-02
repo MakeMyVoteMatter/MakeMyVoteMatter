@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8' />
+    <title>Make My Vote Matter</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <style>
+        .mapboxgl-popup {
+            max-width: 400px;
+            font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+        }
+    </style>
+
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.min.js'></script>
+<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.css'
+    type='text/css' />
+    
+    <div id='map'></div>
+    <script>
+        mapboxgl.accessToken =
+            'pk.eyJ1IjoidXJzdWxha2IiLCJhIjoiY2psamt2bWowMGN4dTN2cG44dTFoZmZlNCJ9.VSTtHRu3gcQq-AQ_XuXNfA';
+        const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/ursulakb/cjljpf9i6119k2smmlrnmuya6',
+            center: [-99.770189, 38.304908],
+            zoom: 3.1
+        });
+
+        // Add a layer showing the state polygons.
+
+
+        // When a click event occurs on a feature in the states layer, open a popup at the
+        // location of the click, with description HTML from its properties.
+
+
+
+        map.on('click', 'districts_1', function (e) {
+            new mapboxgl.Popup()
+                .setLngLat(e.lngLat)
+                .setHTML((e.features[0].properties.state) + ": " + (e.features[0].properties.NAMELSAD))
+                .addTo(map);
+        });
+
+        var geocoder = new MapboxGeocoder({
+            accessToken: mapboxgl.accessToken
+        });
+
+        map.addControl(geocoder);
+        // After the map style has loaded on the page, add a source layer and default
+// styling for a single point.
+map.on('load', function() {
+    map.addSource('single-point', {
+        "type": "geojson",
+        "data": {
+            "type": "FeatureCollection",
+            "features": []
+        }
+    });
+
+    map.addLayer({
+        "id": "point",
+        "source": "single-point",
+        "type": "circle",
+        "paint": {
+            "circle-radius": 10,
+            "circle-color": "#007cbf"
+        }
+    });
+
+
+    // Listen for the `result` event from the MapboxGeocoder that is triggered when a user
+    // makes a selection and add a symbol that matches the result.
+    geocoder.on('result', function(ev) {
+        map.getSource('single-point').setData(ev.result.geometry);
+    
+    
+    });
+
+
+          map.on('click', 'districts_1', function (e) {
+                new mapboxgl.Popup({closeOnClick: false})
+                    .setLngLat(e.lngLat)
+                    .setHTML((e.features[0].properties.state) + ": " + (e.features[0].properties.NAMELSAD))
+                    .addTo(map);
+            });
+            
+            map.on('click', 'districts_2', function (e) {
+                new mapboxgl.Popup({closeOnClick: false})
+                    .setLngLat(e.lngLat)
+                    .setHTML((e.features[0].properties.state) + ": " + (e.features[0].properties.NAMELSAD))
+                    .addTo(map);
+            });
+            map.on('click', 'districts_3', function (e) {
+                new mapboxgl.Popup({closeOnClick: false})
+                    .setLngLat(e.lngLat)
+                    .setHTML((e.features[0].properties.state) + ": " + (e.features[0].properties.NAMELSAD))
+                    .addTo(map);
+            });
+            map.on('click', 'districts_4', function (e) {
+                new mapboxgl.Popup({closeOnClick: false})
+                    .setLngLat(e.lngLat)
+                    .setHTML((e.features[0].properties.state) + ": " + (e.features[0].properties.NAMELSAD))
+                    .addTo(map);
+            });
+            map.on('click', 'districts_5', function (e) {
+                new mapboxgl.Popup({closeOnClick: false})
+                    .setLngLat(e.lngLat)
+                    .setHTML((e.features[0].properties.state) + ": " + (e.features[0].properties.NAMELSAD))
+                    .addTo(map);
+            });
+            
+
+
+
+});
+
+// Add zoom and rotation controls to the map.
+map.addControl(new mapboxgl.NavigationControl());
+
+
+
+    </script>
+
+</body>
+
+</html>
