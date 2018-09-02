@@ -1,16 +1,36 @@
 <!DOCTYPE html>
 <html>
 
-<head>
+
+    <head>
     <meta charset='utf-8' />
     <title>Make My Vote Matter</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.css' rel='stylesheet' />
-    <style>
+   
+</head>
+    <body>
+        
+   <style>
         body {
             margin: 0;
             padding: 0;
+        }
+        h2,
+        h3 {
+            margin: 10px;
+            font-size: 1.2em;
+        }
+
+        h3 {
+            font-size: 1em;
+        }
+
+        p {
+            font-size: 0.85em;
+            margin: 10px;
+            text-align: left;
         }
 
         #map {
@@ -19,17 +39,34 @@
             bottom: 0;
             width: 100%;
         }
-    </style>
-</head>
+        .map-overlay {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.8);
+            margin-right: 20px;
+            font-family: Arial, sans-serif;
+            overflow: auto;
+            border-radius: 3px;
+        }
 
-<body>
+        #features {
+            top: 0;
+            height: 100px;
+            margin-top: 60px;
+            width: 220px;
+        }
+   
 
-    <style>
-        .mapboxgl-popup {
+            .mapboxgl-popup {
             max-width: 400px;
             font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
         }
+        
     </style>
+
+
+
 
 <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.min.js'></script>
 <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.css'
@@ -74,6 +111,7 @@ map.on('load', function() {
         "data": {
             "type": "FeatureCollection",
             "features": []
+       
         }
     });
 
@@ -138,7 +176,43 @@ map.on('load', function() {
 map.addControl(new mapboxgl.NavigationControl());
 
 
+map.on('load', function () {
 
+map.addLayer({
+    "id": "points",
+    "type": "symbol",
+    "source": {
+        "type": "geojson",
+        "data": {
+            "type": "FeatureCollection",
+            "features": [{
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [-73, 58]
+                },
+                "properties": {
+                    "title": "1) Type your Address >>",
+                }
+            }, {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [-73, 55]
+                },
+                "properties": {
+                    "title": "2) Click on the map to see your Voting District(s)",
+                }
+            }]
+        }
+    },
+    "layout": {
+        "text-field": "{title}",
+        "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+        "text-anchor": "top"
+    }
+});
+});
     </script>
 
 </body>
